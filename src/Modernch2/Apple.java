@@ -1,6 +1,8 @@
 package Modernch2;
 
 
+import java.util.Comparator;
+
 public class Apple {
     public String getColor() {
         return color;
@@ -18,11 +20,4 @@ public class Apple {
         this.weight = weight;
     }
 
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public static boolean isRedAndHeavy(Apple apple) {
-        return "RED".equals(apple.getColor()) && apple.getWeight() > 100;
-    }
 }
