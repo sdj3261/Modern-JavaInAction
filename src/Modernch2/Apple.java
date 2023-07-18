@@ -13,6 +13,11 @@ public class Apple {
     private String color;
     private Integer weight;
 
+    public Apple(String color, Integer weight) {
+        this.color = color;
+        this.weight = weight;
+    }
+
     public Integer getWeight() {
         return weight;
     }
