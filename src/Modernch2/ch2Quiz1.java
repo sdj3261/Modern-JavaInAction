@@ -29,9 +29,9 @@ public class ch2Quiz1 {
 
         @Override
         public String predicatePrintApple(Apple apple) {
-            if(apple.getWeight() > 10) {
-                return "무거운 사과 입니다.";
-            }
+//            if(apple.getWeight() > 10) {
+//                return "무거운 사과 입니다.";
+//            }
             return "가벼운 사과 입니다.";
         }
     }
