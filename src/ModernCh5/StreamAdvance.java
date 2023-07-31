@@ -3,6 +3,7 @@ package ModernCh5;
 import ModerenCh4.Dish;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -47,5 +48,31 @@ public class StreamAdvance {
         //스트림의 요리 개수 구하기
         int DishCount = menu.stream().map(dish -> 1).reduce(1,(a,b) -> a + b);
         System.out.println(DishCount);
+
+        Trader raoul = new Trader("Raoul", "Cambridge");
+        Trader mario = new Trader("mario", "Milan");
+        Trader alan = new Trader("alan", "Cambridge");
+        Trader brian = new Trader("brian", "Cambridge");
+
+        List<Transaction> transactions = Arrays.asList(new Transaction(brian,2011,300),
+                new Transaction(raoul,2012,1000),
+                new Transaction(raoul, 2011, 400),
+                new Transaction(mario, 2012, 710),
+                new Transaction(mario, 2012, 700),
+                new Transaction(alan, 2012, 950)
+        );
+
+        //2011년에 일어난 모든 트랜잭션 찾아 오름차순 정리, 필터링이 필요할떄는 (boolean) filter
+        transactions.stream().filter(transaction -> transaction.getYear() == 2011).sorted().collect(toList());
+        //거래자가 근무하는 모든 도시 중복없이 나열 , 특정값뽑아낼떄는 map
+        transactions.stream().map(transaction -> transaction.getTrader().getCity()).distinct().collect(toList());
+        //케임브리지 근무 거래자 이름순 정렬
+        transactions.stream().filter(transaction -> transaction.getTrader().getCity() == "Cambridge").
+                map(transaction -> transaction.getTrader().getName())
+                .sorted().collect(toList());
+        //모든 거래자 이름 알파벳 순 정렬
+        transactions.stream().map(Transaction::getTrader).sorted().collect(toList());
+
+
     }
 }
