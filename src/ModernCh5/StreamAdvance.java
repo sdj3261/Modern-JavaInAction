@@ -5,6 +5,7 @@ import ModerenCh4.Dish;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 public class StreamAdvance {
@@ -64,15 +65,23 @@ public class StreamAdvance {
         );
 
         //2011년에 일어난 모든 트랜잭션 찾아 오름차순 정리, 필터링이 필요할떄는 (boolean) filter
-        transactions.stream().filter(transaction -> transaction.getYear() == 2011).sorted().collect(toList());
+        List<Transaction> q1 = transactions.stream().filter(transaction -> transaction.getYear() == 2011).sorted(comparing(Transaction::getValue)).collect(toList());
+        System.out.println(q1.toString());
         //거래자가 근무하는 모든 도시 중복없이 나열 , 특정값뽑아낼떄는 map
         transactions.stream().map(transaction -> transaction.getTrader().getCity()).distinct().collect(toList());
         //케임브리지 근무 거래자 이름순 정렬
         transactions.stream().filter(transaction -> transaction.getTrader().getCity() == "Cambridge").
-                map(transaction -> transaction.getTrader().getName())
-                .sorted().collect(toList());
+                map(Transaction::getTrader).sorted(comparing(Trader::getName)).collect(toList());
         //모든 거래자 이름 알파벳 순 정렬
-        transactions.stream().map(Transaction::getTrader).sorted().collect(toList());
+        transactions.stream().map(Transaction::getTrader).sorted(comparing(Trader::getName)).collect(toList());
+        //밀라노에 거래자가 있는가?
+        transactions.stream().anyMatch(transaction -> transaction.getTrader().getCity().equals("Milan"));
+        //케임브리지에 거주하는 거래자의 모든 트랜잭션 값을 출력해라?
+        transactions.stream().filter(transaction -> transaction.getTrader().getCity().equals("Cambridge")).map(Transaction::getValue).forEach(System.out::println);
+        //전체 트랜잭션 중 최댓값은?
+        transactions.stream().map(Transaction::getValue).reduce(Integer::max);
+        //전체 트랜잭션 중 최소값은?
+        transactions.stream().map(Transaction::getValue).reduce(Integer::min);
 
 
     }
